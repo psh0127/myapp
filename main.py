@@ -20,9 +20,9 @@ if region:
     region_data = data[data['행정구역'] == region]
     
     if not region_data.empty:
-        # 중학생 인구와 총인구 추출
-        middle_school_population = region_data[middle_school_ages].sum(axis=1).values[0]
-        total_population = region_data['2024년06월_계_총인구수'].values[0]
+        # 중학생 인구와 총인구 추출 (천 단위 구분 기호 제거 후 숫자로 변환)
+        middle_school_population = region_data[middle_school_ages].replace(',', '', regex=True).astype(int).sum(axis=1).values[0]
+        total_population = int(region_data['2024년06월_계_총인구수'].values[0].replace(',', ''))
 
         # 중학생 인구 비율 계산
         middle_school_ratio = middle_school_population / total_population
